@@ -15,6 +15,8 @@ import Appointment from "components/Appointment/index";
 import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
+import Confirm from "components/Appointment/Confirm";
+import Status from "components/Appointment/Status";
 
 storiesOf("Button", module)
   .addParameters({
@@ -144,3 +146,9 @@ storiesOf("Empty", module)
 
 storiesOf("Show", module)
   .add("Show", () => <Show onEdit={action("onEdit")} onDelete={action("onDelete")} />);
+
+storiesOf("Confirm", module)
+  .add("Confirm", () => <Confirm onCancel={action("onCancel")} onConfirm={action("onConfirm")} />);
+
+storiesOf("Status", module)
+  .add("Status", () => <Status />);
