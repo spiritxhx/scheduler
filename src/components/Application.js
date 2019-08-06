@@ -66,7 +66,7 @@ const appointments = [
     }
   },
   {
-    id: 5,
+    id: "last",
     time: "4pm",
   }
 
