@@ -18,6 +18,7 @@ import Show from "components/Appointment/Show";
 import Confirm from "components/Appointment/Confirm";
 import Status from "components/Appointment/Status";
 import Error from "components/Appointment/Error";
+import Form from "components/Appointment/Form";
 
 storiesOf("Button", module)
   .addParameters({
@@ -140,7 +141,7 @@ storiesOf("Appointment", module)
   .add("Appointment with Time", () => <Appointment time="12pm" />);
 
 storiesOf("Header", module)
-  .add("Header", () => <Header />);
+  .add("Header", () => <Header time="2am" />);
 
 storiesOf("Empty", module)
   .add("Empty", () => <Empty onAdd={action("onAdd")} />);
@@ -158,3 +159,13 @@ storiesOf("Status", module)
 
 storiesOf("Error", module)
   .add("Error", () => <Error onClose={action("onClose")} message="Could not delete appointment." />);
+
+storiesOf("Form", module)
+  .add("Form", () => <Form
+    interviewers={interviewers}
+    value={2}
+    onChange={action("setInterviewer")}
+    onSave={action("onSave")}
+    onCancel={action("onCancel")}
+    name="Hans"
+  />)
