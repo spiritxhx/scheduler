@@ -52,7 +52,7 @@ const appointments = [
     //     avatar: "https://i.imgur.com/Nmx0Qxo.png",
     //   }
     // }
-  }, 
+  },
   {
     id: 4,
     time: "3pm",
@@ -69,7 +69,7 @@ const appointments = [
     id: 5,
     time: "4pm",
   }
-  
+
 
 ];
 export default function Application(props) {
@@ -98,6 +98,7 @@ export default function Application(props) {
       <section className="schedule">
         {appointments.map(appointment => {
           return <Appointment
+            key={appointment.id}
             id={appointment.id}
             time={appointment.time}
             interview={appointment.interview}
