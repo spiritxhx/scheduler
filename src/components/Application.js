@@ -67,8 +67,14 @@ const appointments = [
 
 ];
 export default function Application(props) {
-  const [day, setDay] = useState('Monday');
-  const [days, setDays] = useState([]);
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    appointments: {}
+  });
+  const setDay = day => setState({ ...state, day });
+  const setDays = days => setState(prev => ({ ...prev, days }));;
+  
   useEffect(() => {
     axios
       .get("http://localhost:3001/api/days")
@@ -87,8 +93,8 @@ export default function Application(props) {
           alt="Interview Scheduler"
         />
         <DayList
-          days={days}
-          day={day}
+          days={state.days}
+          day={state.day}
           setDay={day => setDay(day)}
         />
         <hr className="sidebar__separator sidebar--centered" />
