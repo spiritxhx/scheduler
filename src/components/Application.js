@@ -1,27 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Appointment from 'components/Appointment/index';
 
 import "components/Application.scss";
 import DayList from 'components/DayList';
+import axios from 'axios';
 
-
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
+// eslint-disable-next-line
+// const days = [
+//   {
+//     id: 1,
+//     name: "Monday",
+//     spots: 2,
+//   },
+//   {
+//     id: 2,
+//     name: "Tuesday",
+//     spots: 5,
+//   },
+//   {
+//     id: 3,
+//     name: "Wednesday",
+//     spots: 0,
+//   },
+// ];
 
 
 const appointments = [
@@ -44,14 +45,7 @@ const appointments = [
   {
     id: 3,
     time: "2pm"
-    // interview: {
-    //   student: "Hans",
-    //   interviewer: {
-    //     id: 1,
-    //     name: "Sylvia Palmer",
-    //     avatar: "https://i.imgur.com/Nmx0Qxo.png",
-    //   }
-    // }
+
   },
   {
     id: 4,
@@ -74,6 +68,16 @@ const appointments = [
 ];
 export default function Application(props) {
   const [day, setDay] = useState('Monday');
+  const [days, setDays] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/api/days")
+      .then(res => {
+        setDays(res.data);
+      })
+      .catch(err => console.log(err))
+  }, []
+  );
   return (
     <main className="layout">
       <section className="sidebar">
