@@ -19,6 +19,7 @@ import Confirm from "components/Appointment/Confirm";
 import Status from "components/Appointment/Status";
 import Error from "components/Appointment/Error";
 import Form from "components/Appointment/Form";
+import AppointmentEmpty from "components/Appointment/AppointmentEmpty";
 
 storiesOf("Button", module)
   .addParameters({
@@ -138,7 +139,29 @@ storiesOf("Appointment", module)
     backgrounds: [{ name: "white", value: "#fff", default: true }]
   })
   .add("Appointment", () => <Appointment />)
-  .add("Appointment with Time", () => <Appointment time="12pm" />);
+  .add("Appointment with Time", () => <Appointment time="12pm" />)
+  // .add("Appointment Empty", () => (
+  //   <React.Fragment>
+  //     <Appointment
+  //       id={1}
+  //       time="12pm"
+  //     />
+  //     <Appointment
+  //       id="last"
+  //       time="1pm"
+  //     />
+  //   </React.Fragment>
+  // ))
+  // .add("Appointment Booked", () => (
+  //   <React.Fragment>
+  //     <Appointment
+  //       id={1}
+  //       time="12pm"
+  //       interview={{ student: "Lydia Miller-Jones", interviewer: interviewers[0] }}
+  //     />
+  //     <Appointment id="last" time="1pm" />
+  //   </React.Fragment>
+  // ))
 
 storiesOf("Header", module)
   .add("Header", () => <Header time="2am" />);
@@ -169,3 +192,16 @@ storiesOf("Form", module)
     onCancel={action("onCancel")}
     name="Hans"
   />)
+storiesOf("Appointment Empty", module)
+  .add("Appointment Empty", () => (
+    <React.Fragment>
+      <AppointmentEmpty
+        id={1}
+        time="12pm"
+      />
+      <AppointmentEmpty
+        id="last"
+        time="1pm"
+      />
+    </React.Fragment>
+  ))

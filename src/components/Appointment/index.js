@@ -7,10 +7,10 @@ import Error from './Error';
 import Show from './Show';
 import Status from './Status';
 
-export default function Appointment() {
+export default function Appointment(props) {
   return (
     <article className="appointment">
-      <Header />
+      <Header time={props.time} />
       <Empty />
     </article>
   )
