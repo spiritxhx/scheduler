@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "components/Appointment/styles.scss";
 import Header from './Header';
 import Empty from './Empty';
@@ -15,7 +15,13 @@ const CREATE = "CREATE";
 
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY)
-
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    return interview;
+  }
   return (
     <article className="appointment">
       <Header time={props.time} />
@@ -32,9 +38,13 @@ export default function Appointment(props) {
       }
       {mode === CREATE &&
         <Form
-          interviewers={[]}
+          interviewers={props.interviewers}
           name="Hans"
-          onCancel = {back}
+          onCancel={back}
+          onSave={(name, interviewer) => {
+            props.bookInterview(props.id, save(name, interviewer));
+            // transition(SHOW);
+          }}
         />}
     </article>
   )

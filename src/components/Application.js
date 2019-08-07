@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Appointment from 'components/Appointment/index';
-import { getAppointmentsForDay, getInterview } from '../helpers/selectors';
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from '../helpers/selectors';
 
 import "components/Application.scss";
 import DayList from 'components/DayList';
@@ -32,15 +32,28 @@ export default function Application(props) {
       })
       .catch(err => console.log(err))
   }, []);
+  
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+  }
 
+  // const interview = {
+  //   student: name,
+  //   interviewer
+  // };
+  
   //show the correct value for appoinments
   const appointmentList = getAppointmentsForDay(state, state.day).map(appointment => {
     const interview = getInterview(state, appointment.interview);
+    const interviewers = getInterviewersForDay(state, state.day);
     return <Appointment
       key={appointment.id}
       id={appointment.id}
       time={appointment.time}
       interview={interview}
+      interviewers={interviewers}
+      bookInterview={bookInterview}
+
     />
   });
 
