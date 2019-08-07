@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Appointment from 'components/Appointment/index';
-import { getAppointmentsByDay } from '../helpers/selectors';
+import { getAppointmentsForDay } from '../helpers/selectors';
 
 import "components/Application.scss";
 import DayList from 'components/DayList';
@@ -75,19 +75,30 @@ export default function Application(props) {
   });
   const setDay = day => setState(prev => ({ ...prev, day }));
   const setDays = days => setState(prev => ({ ...prev, days }));
-  const setAppointment = appointment => setState(prev => ({ ...prev, appointment }));
+  const setAppointments = appointments => setState(prev => ({ ...prev, appointments }));
+  const setInterviewers = interviewers => setState(prev => ({ ...prev, interviewers }));
 
   const getDays = axios.get("http://localhost:3001/api/days");
-  const getAppointments = axios.get("http://localhost:3001/api/appointments")
+  const getAppointments = axios.get("http://localhost:3001/api/appointments");
+  const getInterviewers = axios.get("http://localhost:3001/api/interviewers");
 
   useEffect(() => {
-    Promise.all([getDays, getAppointments])
+    Promise.all([getDays, getAppointments, getInterviewers])
       .then(res => {
         setDays(res[0].data);
-        setAppointment(res[1].data);
+        setAppointments(res[1].data);
+        setInterviewers(res[2].data);
       })
       .catch(err => console.log(err))
   }, []);
+
+  const appointmentList = getAppointmentsForDay(state, state.day).map(appointment => {
+    return <Appointment
+      key={appointment.id}
+      {...appointment}
+    />
+  });
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -110,14 +121,7 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {appointments.map(appointment => {
-          return <Appointment
-            key={appointment.id}
-            id={appointment.id}
-            time={appointment.time}
-            interview={appointment.interview}
-          />;
-        })}
+        {appointmentList}
       </section>
     </main>
   );
