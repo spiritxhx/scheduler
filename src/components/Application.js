@@ -1,72 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Appointment from 'components/Appointment/index';
-import { getAppointmentsForDay } from '../helpers/selectors';
+import { getAppointmentsForDay, getInterview } from '../helpers/selectors';
 
 import "components/Application.scss";
 import DayList from 'components/DayList';
 import axios from 'axios';
 
 // eslint-disable-next-line
-// const days = [
-//   {
-//     id: 1,
-//     name: "Monday",
-//     spots: 2,
-//   },
-//   {
-//     id: 2,
-//     name: "Tuesday",
-//     spots: 5,
-//   },
-//   {
-//     id: 3,
-//     name: "Wednesday",
-//     spots: 0,
-//   },
-// ];
 
-
-const appointments = [
-  {
-    id: 1,
-    time: "12pm",
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 1,
-        name: "Tori Malcolm",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  {
-    id: 3,
-    time: "2pm"
-
-  },
-  {
-    id: 4,
-    time: "3pm",
-    interview: {
-      student: "Bob",
-      interviewer: {
-        id: 1,
-        name: "Mildred Nazir",
-        avatar: "https://i.imgur.com/T2WwVfS.png",
-      }
-    }
-  },
-  {
-    id: "last",
-    time: "4pm",
-  }
-
-
-];
 export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
@@ -92,6 +33,7 @@ export default function Application(props) {
       .catch(err => console.log(err))
   }, []);
 
+  //show the correct value for appoinments
   const appointmentList = getAppointmentsForDay(state, state.day).map(appointment => {
     return <Appointment
       key={appointment.id}
