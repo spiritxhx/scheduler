@@ -77,7 +77,7 @@ export default function Appointment(props) {
           message="Are you sure you want to delete this interview?"
           onConfirm={() => {
             transition(DELETING, true)
-            props.deleteInterview(props.id)
+            props.cancelInterview(props.id)
               .then(() => { transition(EMPTY) })
               .catch(err => {
                 console.log(err);
