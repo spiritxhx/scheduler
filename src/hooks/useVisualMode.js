@@ -7,9 +7,9 @@ export function useVisualMode(value) {
   const transition = (value2, replace) => {
     if (replace) {
       history.pop();
-      history.push(value2);
+      setHistory(prev=>[...prev, value2]);
     } else {
-      setHistory([...history, value2]);
+      setHistory(prev=>[...prev, value2]);
     }
     setMode(value2);
   }
