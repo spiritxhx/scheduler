@@ -16,7 +16,13 @@ export default function Application(props) {
   });
   const setDay = day => setState(prev => ({ ...prev, day }));
   const setDays = days => setState(prev => ({ ...prev, days }));
-  const setAppointments = appointments => setState(prev => ({ ...prev, appointments }));
+  const setAppointments = appointments => {
+    // console.log('setState: ', appointments);
+    // console.log('setState: ', appointments);
+    setState(prev => ({ ...prev, appointments}))
+
+   
+  }
   const setInterviewers = interviewers => setState(prev => ({ ...prev, interviewers }));
 
   const getDays = axios.get("http://localhost:3001/api/days");
@@ -28,24 +34,45 @@ export default function Application(props) {
       .then(res => {
         setDays(res[0].data);
         setAppointments(res[1].data);
+        // console.log(res[1].data, state.appointments);
         setInterviewers(res[2].data);
       })
       .catch(err => console.log(err))
   }, []);
+
   
-  function bookInterview(id, interview) {
-    console.log(id, interview);
-  }
 
   // const interview = {
   //   student: name,
   //   interviewer
   // };
-  
+
   //show the correct value for appoinments
+  const interviewers = getInterviewersForDay(state, state.day);
   const appointmentList = getAppointmentsForDay(state, state.day).map(appointment => {
     const interview = getInterview(state, appointment.interview);
-    const interviewers = getInterviewersForDay(state, state.day);
+    async function bookInterview(id, interview) {
+      const appointment1 = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment1
+      };
+      console.log("appointments: ", appointments)
+      setState({
+        ...state,
+        appointments: {...appointments}
+      });
+      await new Promise((resv, rej) => {
+         setTimeout(() => {
+          resv()
+         }, 2000)
+       })
+    }
+
+    console.log('interview: ', interview)
     return <Appointment
       key={appointment.id}
       id={appointment.id}
