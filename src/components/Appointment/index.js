@@ -2,7 +2,7 @@ import React from 'react';
 import "components/Appointment/styles.scss";
 import Header from './Header';
 import Empty from './Empty';
-// import Confirm from './Confirm';
+import Confirm from './Confirm';
 // import Error from './Error';
 import Show from './Show';
 import Status from './Status';
@@ -14,6 +14,7 @@ const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
+const CONFIRM = "CONFIRM";
 
 const save = (name, interviewer) => {
   const interview = {
@@ -38,10 +39,7 @@ export default function Appointment(props) {
           student={props.interview.student}
           interviewer={props.interview.interviewer}
           onDelete={() => {
-            transition(DELETING);
-            props.deleteInterview(props.id)
-              .then(() => { transition(Empty) })
-              .catch(err => console.log(err))
+            transition(CONFIRM);
           }}
         />
       }
@@ -65,6 +63,17 @@ export default function Appointment(props) {
       }
       {mode === DELETING &&
         <Status message="DELETING" />
+      }
+      {mode === CONFIRM &&
+        <Confirm
+          message="Are you sure to delete this interview?"
+          onConfirm={() => {
+            transition(DELETING)
+            props.deleteInterview(props.id)
+              .then(() => { transition(EMPTY) })
+              .catch(err => console.log(err))
+          }}
+          onCancel={back} />
       }
     </article>
   )
