@@ -37,18 +37,26 @@ export default function Application(props) {
 
 
   function bookInterview(id, interview) {
-    const appointment1 = {
+    const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
     const appointments = {
       ...state.appointments,
-      [id]: appointment1
+      [id]: appointment
     };
     setState({
       ...state,
       appointments: { ...appointments }
     });
+
+    //put the update into the server side and database
+    // console.log('appointment: ', appointment)
+    return axios.put(`http://localhost:3001/api/appointments/${id}`,
+      {interview})
+      .then(res => {
+        console.log(res);
+      })
   }
   //show the correct value for appoinments
   const interviewers = getInterviewersForDay(state, state.day);
