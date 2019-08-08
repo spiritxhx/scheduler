@@ -17,7 +17,7 @@ export default function Application(props) {
   const setDay = day => setState(prev => ({ ...prev, day }));
   const setDays = days => setState(prev => ({ ...prev, days }));
   const setAppointments = appointments => {
-    setState(prev => ({ ...prev, appointments}))
+    setState(prev => ({ ...prev, appointments }))
   }
   const setInterviewers = interviewers => setState(prev => ({ ...prev, interviewers }));
 
@@ -35,12 +35,6 @@ export default function Application(props) {
       .catch(err => console.log(err))
   }, []);
 
-  
-
-  // const interview = {
-  //   student: name,
-  //   interviewer
-  // };
 
   function bookInterview(id, interview) {
     const appointment1 = {
@@ -53,14 +47,14 @@ export default function Application(props) {
     };
     setState({
       ...state,
-      appointments: {...appointments}
+      appointments: { ...appointments }
     });
   }
   //show the correct value for appoinments
   const interviewers = getInterviewersForDay(state, state.day);
   const days = getAppointmentsForDay(state, state.day);
+  console.log('state.day: ',state.days);
   const appointmentList = days.map(appointment => {
-
     const interview = getInterview(state, appointment.interview);
     return <Appointment
       key={appointment.id}
