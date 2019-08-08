@@ -28,51 +28,52 @@ export default function Application(props) {
   useEffect(() => {
     Promise.all([getDays, getAppointments, getInterviewers])
       .then(res => {
-        setDays(res[0].data);
-        setAppointments(res[1].data);
-        setInterviewers(res[2].data);
+        setState(prev => ({
+          ...prev,
+          days: res[0].data,
+          appointments: res[1].data,
+          interviewers: res[2].data
+        }))
       })
       .catch(err => console.log(err))
   }, []);
 
 
   const bookInterview = (id, interview) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-    setState({
-      ...state,
-      appointments: { ...appointments }
-    });
-
     //put the update into the server side and database
-    // console.log('appointment: ', appointment)
-    return axios.put(`http://localhost:3001/api/appointments/${id}`,
-      { interview })
-      .then(res => {
-        console.log(res);
+    return axios.put(`http://localhost:3001/api/appointments/${id}`, { interview })
+      .then(() => {
+        const appointment = {
+          ...state.appointments[id],
+          interview: { ...interview }
+        };
+        const appointments = {
+          ...state.appointments,
+          [id]: appointment
+        };
+        setState({
+          ...state,
+          appointments: { ...appointments }
+        });
       })
   }
 
   const deleteInterview = id => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-    setState({
-      ...state,
-      appointments: { ...appointments }
-    });
     return axios.delete(`http://localhost:3001/api/appointments/${id}`)
+      .then(() => {
+        const appointment = {
+          ...state.appointments[id],
+          interview: null
+        };
+        const appointments = {
+          ...state.appointments,
+          [id]: appointment
+        };
+        setState({
+          ...state,
+          appointments: { ...appointments }
+        });
+      })
   }
   //show the correct value for appoinments
   const interviewers = getInterviewersForDay(state, state.day);

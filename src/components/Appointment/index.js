@@ -3,7 +3,7 @@ import "components/Appointment/styles.scss";
 import Header from './Header';
 import Empty from './Empty';
 import Confirm from './Confirm';
-// import Error from './Error';
+import Error from './Error';
 import Show from './Show';
 import Status from './Status';
 import Form from './Form';
@@ -15,6 +15,8 @@ const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 const save = (name, interviewer) => {
   const interview = {
@@ -41,6 +43,9 @@ export default function Appointment(props) {
           onDelete={() => {
             transition(CONFIRM);
           }}
+          onEdit={() => {
+            transition(CREATE);
+          }}
         />
       }
       {mode === CREATE &&
@@ -49,10 +54,13 @@ export default function Appointment(props) {
           onCancel={back}
           onSave={(name, interviewer) => {
             if (name && interviewer) {
-              transition(SAVING);
+              transition(SAVING, true);
               props.bookInterview(props.id, save(name, interviewer))
                 .then(() => transition(SHOW))
-                .catch(err => console.log(err))
+                .catch(err => {
+                  console.log(err);
+                  transition(ERROR_SAVE, true);
+                })
             } else {
               back();
             }
@@ -66,14 +74,35 @@ export default function Appointment(props) {
       }
       {mode === CONFIRM &&
         <Confirm
-          message="Are you sure to delete this interview?"
+          message="Are you sure you want to delete this interview?"
           onConfirm={() => {
-            transition(DELETING)
+            transition(DELETING, true)
             props.deleteInterview(props.id)
               .then(() => { transition(EMPTY) })
-              .catch(err => console.log(err))
+              .catch(err => {
+                console.log(err);
+                transition(ERROR_DELETE, true);
+              })
           }}
           onCancel={back} />
+      }
+      {mode === ERROR_SAVE &&
+        <Error
+          message="Something worong when you're tring to save this interview!"
+          onClose={() => {
+            back();
+            back();
+          }}
+        />
+      }
+      {mode === ERROR_DELETE &&
+        <Error
+          message="Something worong when you're tring to delete this interview!"
+          onClose={() => {
+            back();
+            back();
+          }}
+        />
       }
     </article>
   )
