@@ -4,7 +4,7 @@ import { getAppointmentsForDay, getInterview, getInterviewersForDay } from '../h
 
 import "components/Application.scss";
 import DayList from 'components/DayList';
-import {useApplicationData} from 'hooks/useApplicationData';
+import { useApplicationData } from 'hooks/useApplicationData';
 
 // eslint-disable-next-line
 
