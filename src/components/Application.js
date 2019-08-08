@@ -17,11 +17,7 @@ export default function Application(props) {
   const setDay = day => setState(prev => ({ ...prev, day }));
   const setDays = days => setState(prev => ({ ...prev, days }));
   const setAppointments = appointments => {
-    // console.log('setState: ', appointments);
-    // console.log('setState: ', appointments);
     setState(prev => ({ ...prev, appointments}))
-
-   
   }
   const setInterviewers = interviewers => setState(prev => ({ ...prev, interviewers }));
 
@@ -34,7 +30,6 @@ export default function Application(props) {
       .then(res => {
         setDays(res[0].data);
         setAppointments(res[1].data);
-        // console.log(res[1].data, state.appointments);
         setInterviewers(res[2].data);
       })
       .catch(err => console.log(err))
@@ -47,32 +42,26 @@ export default function Application(props) {
   //   interviewer
   // };
 
+  function bookInterview(id, interview) {
+    const appointment1 = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment1
+    };
+    setState({
+      ...state,
+      appointments: {...appointments}
+    });
+  }
   //show the correct value for appoinments
   const interviewers = getInterviewersForDay(state, state.day);
-  const appointmentList = getAppointmentsForDay(state, state.day).map(appointment => {
-    const interview = getInterview(state, appointment.interview);
-    async function bookInterview(id, interview) {
-      const appointment1 = {
-        ...state.appointments[id],
-        interview: { ...interview }
-      };
-      const appointments = {
-        ...state.appointments,
-        [id]: appointment1
-      };
-      console.log("appointments: ", appointments)
-      setState({
-        ...state,
-        appointments: {...appointments}
-      });
-      await new Promise((resv, rej) => {
-         setTimeout(() => {
-          resv()
-         }, 2000)
-       })
-    }
+  const days = getAppointmentsForDay(state, state.day);
+  const appointmentList = days.map(appointment => {
 
-    console.log('interview: ', interview)
+    const interview = getInterview(state, appointment.interview);
     return <Appointment
       key={appointment.id}
       id={appointment.id}
