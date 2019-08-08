@@ -41,8 +41,12 @@ export default function Appointment(props) {
           interviewers={props.interviewers}
           onCancel={back}
           onSave={(name, interviewer) => {
-            props.bookInterview(props.id, save(name, interviewer));
-            transition(SHOW);
+            if (props.collection) {
+              props.bookInterview(props.id, save(name, interviewer));
+              transition(SHOW);
+            } else {
+              back()
+            }
           }}
         />}
     </article>

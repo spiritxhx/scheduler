@@ -53,7 +53,6 @@ export default function Application(props) {
   //show the correct value for appoinments
   const interviewers = getInterviewersForDay(state, state.day);
   const days = getAppointmentsForDay(state, state.day);
-  console.log('state.day: ',state.days);
   const appointmentList = days.map(appointment => {
     const interview = getInterview(state, appointment.interview);
     return <Appointment
