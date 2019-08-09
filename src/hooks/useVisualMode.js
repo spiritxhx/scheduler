@@ -14,6 +14,7 @@ export const useVisualMode = value => {
     setMode(value2);
   }
   const back = () => {
+    let backHistory = [...history]
     history.pop();
     if (history.length > 0) {
       setMode(history[history.length - 1]);

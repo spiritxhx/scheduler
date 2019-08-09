@@ -27,8 +27,8 @@ const reducer = (state, action) => {
         ...state.appointments,
         [id]: appointment
       };
-      const days = state.days
-      days[dayIndex]=dayObj
+      const days = state.days;
+      days[dayIndex] = dayObj;
       return {
         ...state,
         appointments: { ...appointments },

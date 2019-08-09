@@ -181,5 +181,4 @@ storiesOf("Appointment", module)
     onChange={action("setInterviewer")}
     onSave={action("onSave")}
     onCancel={action("onCancel")}
-    name="Hans"
   />)
