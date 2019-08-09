@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import axios from 'axios';
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
@@ -16,6 +16,9 @@ const reducer = (state, action) => {
       };
 
     case SET_INTERVIEW: {
+      const dayObj = state.days.find(eachDay => eachDay.name === day);
+      const dayIndex = dayObj.id - 1;
+      dayObj.spots = Number(dayObj.spots) + (interview ? -1 : 1);
       const appointment = {
         ...state.appointments[id],
         interview: { ...interview }
@@ -24,12 +27,15 @@ const reducer = (state, action) => {
         ...state.appointments,
         [id]: appointment
       };
+      const days = state.days
+      days[dayIndex]=dayObj
       return {
         ...state,
-        appointments: { ...appointments }
+        appointments: { ...appointments },
+        days
       };
     }
-    
+
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
@@ -65,18 +71,18 @@ export const useApplicationData = () => {
   }, []);
 
 
-  const bookInterview = (id, interview) => {
+  const bookInterview = (id, interview, day) => {
     //put the update into the server side and database
     return axios.put(`http://localhost:3001/api/appointments/${id}`, { interview })
       .then(() => {
-        dispatch({ type: SET_INTERVIEW, id, interview })
+        dispatch({ type: SET_INTERVIEW, id, interview, day })
       })
   }
 
-  const cancelInterview = id => {
+  const cancelInterview = (id, day) => {
     return axios.delete(`http://localhost:3001/api/appointments/${id}`)
       .then(() => {
-        dispatch({ type: SET_INTERVIEW, id })
+        dispatch({ type: SET_INTERVIEW, id, interview: null, day })
       })
   }
 

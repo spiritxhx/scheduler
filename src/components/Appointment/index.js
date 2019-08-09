@@ -55,7 +55,7 @@ export default function Appointment(props) {
           onSave={(name, interviewer) => {
             if (name && interviewer) {
               transition(SAVING, true);
-              props.bookInterview(props.id, save(name, interviewer))
+              props.bookInterview(props.id, save(name, interviewer), props.day)
                 .then(() => transition(SHOW))
                 .catch(err => {
                   console.log(err);
@@ -77,7 +77,7 @@ export default function Appointment(props) {
           message="Are you sure you want to delete this interview?"
           onConfirm={() => {
             transition(DELETING, true)
-            props.cancelInterview(props.id)
+            props.cancelInterview(props.id, props.day)
               .then(() => { transition(EMPTY) })
               .catch(err => {
                 console.log(err);
