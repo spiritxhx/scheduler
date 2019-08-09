@@ -1,8 +1,25 @@
 import { useEffect, useReducer } from 'react';
+// import WebSocket from 'ws';
 import axios from 'axios';
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
+
+const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+  
+ws.onopen = function () {
+  const message = {
+    type: "NOTFICATION",
+    content: "The record was created.",
+    severity: "LOW",
+    timestamp: 387250200000
+  };
+  ws.send(JSON.stringify(message));
+};
+
+ws.onmessage = function (event) {
+  console.log('event.data: ', JSON.parse(event.data));
+}
 
 const reducer = (state, action) => {
   const { day, days, appointments, interviewers, id, interview } = action;
@@ -42,6 +59,8 @@ const reducer = (state, action) => {
       );
   }
 }
+
+
 export const useApplicationData = () => {
 
   const [state, dispatch] = useReducer(reducer,

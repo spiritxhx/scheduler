@@ -20,7 +20,7 @@ export default function Form(props) {
             className="appointment__create-input text--semi-bold"
             name="name"
             type="text"
-            placeholder={name}
+            value={name}
             onChange={event => setName(event.target.value)}
           />
         </form>
