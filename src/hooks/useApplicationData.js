@@ -1,11 +1,12 @@
 import { useEffect, useReducer } from 'react';
 // import WebSocket from 'ws';
 import axios from 'axios';
-import { getDayFromAppointmentId } from '../helpers/selectors';
+import { getDayFromAppointmentId, getSpotsForDay } from '../helpers/selectors';
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
 
+//set up the websocket
 const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
 const reducer = (state, action) => {
@@ -22,7 +23,6 @@ const reducer = (state, action) => {
     case SET_INTERVIEW: {
       const dayObj = state.days.find(eachDay => eachDay.name === day);
       const dayIndex = dayObj.id - 1;
-      dayObj.spots = Number(dayObj.spots) + (interview ? -1 : 1);
       const appointment = {
         ...state.appointments[id],
         interview: interview
@@ -31,6 +31,7 @@ const reducer = (state, action) => {
         ...state.appointments,
         [id]: appointment
       };
+      dayObj.spots = getSpotsForDay(appointments, day);
       const days = state.days;
       days[dayIndex] = dayObj;
       return {
@@ -76,18 +77,18 @@ export const useApplicationData = () => {
       .catch(err => console.log(err))
   }, []);
 
+  //deal with the websocket to dynamically render multiple pages
   ws.onmessage = function (event) {
     const { type, id, interview } = JSON.parse(event.data);
     const day = getDayFromAppointmentId(id);
-    console.log('event.data: ', { type, id, interview , day });
-    dispatch({ type, id, interview, day:'Monday' });
+    dispatch({ type, id, interview, day: day });
   }
 
   const bookInterview = (id, interview, day) => {
     //put the update into the server side and database
     return axios.put(`http://localhost:3001/api/appointments/${id}`, { interview })
       .then(() => {
-        dispatch({ type: SET_INTERVIEW, id, interview, day })
+        dispatch({ type: SET_INTERVIEW, id, interview, day });
       })
   }
 

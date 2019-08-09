@@ -37,8 +37,7 @@ export default function Appointment(props) {
         <Empty
           onAdd={() => transition(CREATE)}
         />}
-      {((mode === SHOW || mode === EMPTY) && (props.interview))
-        &&
+      {((mode === SHOW || mode === EMPTY) && (props.interview)) &&
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}

@@ -69,3 +69,13 @@ export const getDayFromAppointmentId = id => {
     }
   }
 }
+
+export const getSpotsForDay = (appointments, day) => {
+  let spots = 5;
+  for (const id in appointments) {
+    if (getDayFromAppointmentId(id) === day && appointments[id].interview) {
+      spots--;
+    }
+  }
+  return spots;
+};
