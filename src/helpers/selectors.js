@@ -5,7 +5,7 @@ export function getAppointmentsForDay(state, day) {
   for (let i = 0; i < state.days.length; i++) {
     if (state.days[i].name === day) {
       // ans = state.days[i].appointments;
-      ans = [ ...state.days[i].appointments];
+      ans = [...state.days[i].appointments];
     }
   }
   for (const appointment in state.appointments) {
@@ -15,11 +15,11 @@ export function getAppointmentsForDay(state, day) {
       }
     }
   }
-  return ans; 
+  return ans;
 }
 
 export function getInterview(state, interview) {
-  if (!interview||!state.interviewers) {
+  if (!interview || !state.interviewers) {
     return null;
   }
   let id = interview.interviewer;
@@ -34,7 +34,7 @@ export function getInterviewersForDay(state, day) {
   let ans = [];
   for (let i = 0; i < state.days.length; i++) {
     if (state.days[i].name === day) {
-      ans = [ ...state.days[i].interviewers];
+      ans = [...state.days[i].interviewers];
     }
   }
   for (const interviewer in state.interviewers) {
@@ -45,4 +45,27 @@ export function getInterviewersForDay(state, day) {
     }
   }
   return ans;
+}
+
+export const getDayFromAppointmentId = id => {
+  switch (Math.ceil(id / 5)) {
+    case 1: {
+      return 'Monday';
+    }
+    case 2: {
+      return 'Tuesday';
+    }
+    case 3: {
+      return 'Wednesday';
+    }
+    case 4: {
+      return 'Thursday';
+    }
+    case 5: {
+      return 'Friday';
+    }
+    default: {
+      return 'Wrong!!!';
+    }
+  }
 }

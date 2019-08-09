@@ -1,25 +1,12 @@
 import { useEffect, useReducer } from 'react';
 // import WebSocket from 'ws';
 import axios from 'axios';
+import { getDayFromAppointmentId } from '../helpers/selectors';
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
 
 const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
-  
-ws.onopen = function () {
-  const message = {
-    type: "NOTFICATION",
-    content: "The record was created.",
-    severity: "LOW",
-    timestamp: 387250200000
-  };
-  ws.send(JSON.stringify(message));
-};
-
-ws.onmessage = function (event) {
-  console.log('event.data: ', JSON.parse(event.data));
-}
 
 const reducer = (state, action) => {
   const { day, days, appointments, interviewers, id, interview } = action;
@@ -38,7 +25,7 @@ const reducer = (state, action) => {
       dayObj.spots = Number(dayObj.spots) + (interview ? -1 : 1);
       const appointment = {
         ...state.appointments[id],
-        interview: { ...interview }
+        interview: interview
       };
       const appointments = {
         ...state.appointments,
@@ -89,6 +76,12 @@ export const useApplicationData = () => {
       .catch(err => console.log(err))
   }, []);
 
+  ws.onmessage = function (event) {
+    const { type, id, interview } = JSON.parse(event.data);
+    const day = getDayFromAppointmentId(id);
+    console.log('event.data: ', { type, id, interview , day });
+    dispatch({ type, id, interview, day:'Monday' });
+  }
 
   const bookInterview = (id, interview, day) => {
     //put the update into the server side and database
