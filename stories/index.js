@@ -49,23 +49,23 @@ const days = [
   {
     id: 1,
     name: "Monday",
-    spots: 2,
+    spots: 2
   },
   {
     id: 2,
     name: "Tuesday",
-    spots: 5,
+    spots: 5
   },
   {
     id: 3,
     name: "Wednesday",
-    spots: 0,
-  },
+    spots: 0
+  }
 ];
 
 storiesOf("DayList", module)
   .addParameters({
-    backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
+    backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
   })
   .add("Monday", () => (
     <DayList days={days} day={"Monday"} setDay={action("setDay")} />
@@ -142,14 +142,8 @@ storiesOf("Appointment", module)
   .add("Appointment with Time", () => <Appointment time="12pm" />)
   .add("Appointment Empty", () => (
     <React.Fragment>
-      <Appointment
-        id={1}
-        time="12pm"
-      />
-      <Appointment
-        id="last"
-        time="1pm"
-      />
+      <Appointment id={1} time="12pm" />
+      <Appointment id="last" time="1pm" />
     </React.Fragment>
   ))
   .add("Appointment Booked", () => (
@@ -157,7 +151,10 @@ storiesOf("Appointment", module)
       <Appointment
         id={1}
         time="12pm"
-        interview={{ student: "Lydia Miller-Jones", interviewer: interviewers[0] }}
+        interview={{
+          student: "Lydia Miller-Jones",
+          interviewer: interviewers[0]
+        }}
       />
       <Appointment id="last" time="1pm" />
     </React.Fragment>
@@ -166,19 +163,37 @@ storiesOf("Appointment", module)
 
   .add("Empty", () => <Empty onAdd={action("onAdd")} />)
 
-  .add("Show", () => <Show onEdit={action("onEdit")} onDelete={action("onDelete")} student="Lydia Miller-Jones"
-    interviewer={interviewers[0]}
-  />)
-  .add("Confirm", () => <Confirm onCancel={action("onCancel")} onConfirm={action("onConfirm")} message="Delete the Appointment?" />)
+  .add("Show", () => (
+    <Show
+      onEdit={action("onEdit")}
+      onDelete={action("onDelete")}
+      student="Lydia Miller-Jones"
+      interviewer={interviewers[0]}
+    />
+  ))
+  .add("Confirm", () => (
+    <Confirm
+      onCancel={action("onCancel")}
+      onConfirm={action("onConfirm")}
+      message="Delete the Appointment?"
+    />
+  ))
 
   .add("Status", () => <Status message="Deleting" />)
 
-  .add("Error", () => <Error onClose={action("onClose")} message="Could not delete appointment." />)
+  .add("Error", () => (
+    <Error
+      onClose={action("onClose")}
+      message="Could not delete appointment."
+    />
+  ))
 
-  .add("Form", () => <Form
-    interviewers={interviewers}
-    value={2}
-    onChange={action("setInterviewer")}
-    onSave={action("onSave")}
-    onCancel={action("onCancel")}
-  />)
+  .add("Form", () => (
+    <Form
+      interviewers={interviewers}
+      value={2}
+      onChange={action("setInterviewer")}
+      onSave={action("onSave")}
+      onCancel={action("onCancel")}
+    />
+  ));

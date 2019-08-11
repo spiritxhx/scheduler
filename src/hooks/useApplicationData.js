@@ -1,7 +1,7 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer } from "react";
 // import WebSocket from 'ws';
-import axios from 'axios';
-import { getDayFromAppointmentId, getSpotsForDay } from '../helpers/selectors';
+import axios from "axios";
+import { getDayFromAppointmentId, getSpotsForDay } from "../helpers/selectors";
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
@@ -17,7 +17,10 @@ const reducer = (state, action) => {
 
     case SET_APPLICATION_DATA:
       return {
-        ...state, days, appointments, interviewers
+        ...state,
+        days,
+        appointments,
+        interviewers
       };
 
     case SET_INTERVIEW: {
@@ -46,17 +49,14 @@ const reducer = (state, action) => {
         `Tried to reduce with unsupported action type: ${action.type}`
       );
   }
-}
-
+};
 
 export const useApplicationData = () => {
-
-  const [state, dispatch] = useReducer(reducer,
-    {
-      day: "Monday",
-      days: [],
-      appointments: {}
-    });
+  const [state, dispatch] = useReducer(reducer, {
+    day: "Monday",
+    days: [],
+    appointments: {}
+  });
   const setDay = day => dispatch({ type: SET_DAY, day });
 
   useEffect(() => {
@@ -65,43 +65,45 @@ export const useApplicationData = () => {
     const getInterviewers = axios.get("http://localhost:3001/api/interviewers");
     Promise.all([getDays, getAppointments, getInterviewers])
       .then(res => {
-        dispatch(({
+        dispatch({
           type: SET_APPLICATION_DATA,
           // ...state,
           days: res[0].data,
           appointments: res[1].data,
           interviewers: res[2].data
-        }))
+        });
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log(err));
   }, []);
 
   //deal with the websocket to dynamically render multiple pages
-  ws.onmessage = function (event) {
+  ws.onmessage = function(event) {
     const { type, id, interview } = JSON.parse(event.data);
     const day = getDayFromAppointmentId(id);
     dispatch({ type, id, interview, day: day });
-  }
+  };
 
   const bookInterview = (id, interview, day) => {
     //put the update into the server side and database
-    return axios.put(`http://localhost:3001/api/appointments/${id}`, { interview })
+    return axios
+      .put(`http://localhost:3001/api/appointments/${id}`, { interview })
       .then(() => {
         dispatch({ type: SET_INTERVIEW, id, interview, day });
-      })
-  }
+      });
+  };
 
   const cancelInterview = (id, day) => {
-    return axios.delete(`http://localhost:3001/api/appointments/${id}`)
+    return axios
+      .delete(`http://localhost:3001/api/appointments/${id}`)
       .then(() => {
-        dispatch({ type: SET_INTERVIEW, id, interview: null, day })
-      })
-  }
+        dispatch({ type: SET_INTERVIEW, id, interview: null, day });
+      });
+  };
 
   return {
     state,
     setDay,
     bookInterview,
     cancelInterview
-  }
-}
+  };
+};

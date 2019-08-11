@@ -1,5 +1,3 @@
-
-
 export function getAppointmentsForDay(state, day) {
   let ans = [];
   for (let i = 0; i < state.days.length; i++) {
@@ -25,9 +23,12 @@ export function getInterview(state, interview) {
   let id = interview.interviewer;
   let studentName = interview.student;
   return {
-    interviewer: state.interviewers[String(Object.keys(state.interviewers).find(key => id === Number(key)))],
+    interviewer:
+      state.interviewers[
+        String(Object.keys(state.interviewers).find(key => id === Number(key)))
+      ],
     student: studentName
-  }
+  };
 }
 
 export function getInterviewersForDay(state, day) {
@@ -50,25 +51,25 @@ export function getInterviewersForDay(state, day) {
 export const getDayFromAppointmentId = id => {
   switch (Math.ceil(id / 5)) {
     case 1: {
-      return 'Monday';
+      return "Monday";
     }
     case 2: {
-      return 'Tuesday';
+      return "Tuesday";
     }
     case 3: {
-      return 'Wednesday';
+      return "Wednesday";
     }
     case 4: {
-      return 'Thursday';
+      return "Thursday";
     }
     case 5: {
-      return 'Friday';
+      return "Friday";
     }
     default: {
-      return 'Wrong!!!';
+      return "Wrong!!!";
     }
   }
-}
+};
 
 export const getSpotsForDay = (appointments, day) => {
   let spots = 5;

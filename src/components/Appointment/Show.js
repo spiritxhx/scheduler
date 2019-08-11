@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 export default function show(props) {
   return (
@@ -27,5 +27,5 @@ export default function show(props) {
         </section>
       </section>
     </main>
-  )
+  );
 }

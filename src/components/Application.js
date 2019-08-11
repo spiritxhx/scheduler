@@ -1,10 +1,14 @@
 import React from "react";
-import Appointment from 'components/Appointment/index';
-import { getAppointmentsForDay, getInterview, getInterviewersForDay } from '../helpers/selectors';
+import Appointment from "components/Appointment/index";
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewersForDay
+} from "../helpers/selectors";
 
 import "components/Application.scss";
-import DayList from 'components/DayList';
-import { useApplicationData } from 'hooks/useApplicationData';
+import DayList from "components/DayList";
+import { useApplicationData } from "hooks/useApplicationData";
 
 // eslint-disable-next-line
 
@@ -16,14 +20,13 @@ export default function Application(props) {
     cancelInterview
   } = useApplicationData();
 
-
   //show the correct value for appoinments
   const interviewers = getInterviewersForDay(state, state.day);
   const days = getAppointmentsForDay(state, state.day);
-  const appointmentList = days.map(
-    appointment => {
-      const interview = getInterview(state, appointment.interview);
-      return <Appointment
+  const appointmentList = days.map(appointment => {
+    const interview = getInterview(state, appointment.interview);
+    return (
+      <Appointment
         key={appointment.id}
         {...appointment}
         interview={interview}
@@ -32,7 +35,8 @@ export default function Application(props) {
         bookInterview={bookInterview}
         cancelInterview={cancelInterview}
       />
-    });
+    );
+  });
 
   return (
     <main className="layout">
