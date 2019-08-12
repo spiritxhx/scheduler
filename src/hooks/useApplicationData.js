@@ -7,7 +7,7 @@ const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
 
 //set up the websocket
-const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+const ws = new WebSocket("ws://localhost:3001");
 
 // reducer body
 const reducer = (state, action) => {

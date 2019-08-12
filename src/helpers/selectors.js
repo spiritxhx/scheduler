@@ -1,5 +1,5 @@
 //get arrays of appointments of the day
-export function getAppointmentsForDay(state, day) {
+export const getAppointmentsForDay = (state, day) => {
   let ans = [];
   for (let i = 0; i < state.days.length; i++) {
     if (state.days[i].name === day) {
@@ -15,9 +15,9 @@ export function getAppointmentsForDay(state, day) {
     }
   }
   return ans;
-}
+};
 
-export function getInterview(state, interview) {
+export const getInterview = (state, interview) => {
   if (!interview || !state.interviewers) {
     return null;
   }
@@ -30,10 +30,10 @@ export function getInterview(state, interview) {
       ],
     student: studentName
   };
-}
+};
 
 // get arrays of interviewers for the given day
-export function getInterviewersForDay(state, day) {
+export const getInterviewersForDay = (state, day) => {
   let ans = [];
   for (let i = 0; i < state.days.length; i++) {
     if (state.days[i].name === day) {
@@ -48,7 +48,7 @@ export function getInterviewersForDay(state, day) {
     }
   }
   return ans;
-}
+};
 
 export const getDayFromAppointmentId = id => {
   switch (Math.ceil(id / 5)) {
