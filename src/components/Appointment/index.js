@@ -73,8 +73,6 @@ export default function Appointment(props) {
                   console.log(err);
                   transition(ERROR_SAVE, true);
                 });
-            } else {
-              back();
             }
           }}
         />
@@ -95,8 +93,6 @@ export default function Appointment(props) {
                   console.log(err);
                   transition(ERROR_SAVE, true);
                 });
-            } else {
-              back();
             }
           }}
         />
