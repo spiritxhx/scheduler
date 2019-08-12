@@ -4,7 +4,9 @@ export const useVisualMode = value => {
   const [mode, setMode] = useState(value);
   const [history, setHistory] = useState([value]);
 
+  // transit the mode to another input mode
   const transition = (value2, replace) => {
+    // if replace is true value, just replace the latest history
     if (replace) {
       history.pop();
       setHistory(prev => [...prev, value2]);
@@ -13,8 +15,8 @@ export const useVisualMode = value => {
     }
     setMode(value2);
   };
+  // gert 1 step back in the history
   const back = () => {
-    // let backHistory = [...history]
     history.pop();
     if (history.length > 0) {
       setMode(history[history.length - 1]);

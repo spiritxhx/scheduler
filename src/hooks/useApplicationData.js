@@ -9,6 +9,7 @@ const SET_INTERVIEW = "SET_INTERVIEW";
 //set up the websocket
 const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
+// reducer body
 const reducer = (state, action) => {
   const { day, days, appointments, interviewers, id, interview } = action;
   switch (action.type) {
@@ -57,6 +58,7 @@ export const useApplicationData = () => {
     days: [],
     appointments: {}
   });
+  // dipatch the data for the type SET_DAY, will be transited to the reducer
   const setDay = day => dispatch({ type: SET_DAY, day });
 
   useEffect(() => {
@@ -67,7 +69,6 @@ export const useApplicationData = () => {
       .then(res => {
         dispatch({
           type: SET_APPLICATION_DATA,
-          // ...state,
           days: res[0].data,
           appointments: res[1].data,
           interviewers: res[2].data
@@ -93,6 +94,7 @@ export const useApplicationData = () => {
   };
 
   const cancelInterview = (id, day) => {
+    // delete the interview
     return axios
       .delete(`http://localhost:3001/api/appointments/${id}`)
       .then(() => {

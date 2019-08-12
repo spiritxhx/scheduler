@@ -38,6 +38,7 @@ export default function Application(props) {
     );
   });
 
+  // render the Daylist on the left
   return (
     <main className="layout">
       <section className="sidebar">

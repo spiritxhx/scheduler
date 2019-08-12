@@ -1,3 +1,4 @@
+//get arrays of appointments of the day
 export function getAppointmentsForDay(state, day) {
   let ans = [];
   for (let i = 0; i < state.days.length; i++) {
@@ -31,6 +32,7 @@ export function getInterview(state, interview) {
   };
 }
 
+// get arrays of interviewers for the given day
 export function getInterviewersForDay(state, day) {
   let ans = [];
   for (let i = 0; i < state.days.length; i++) {
@@ -71,6 +73,7 @@ export const getDayFromAppointmentId = id => {
   }
 };
 
+// get the available spots left for the given day
 export const getSpotsForDay = (appointments, day) => {
   let spots = 5;
   for (const id in appointments) {
