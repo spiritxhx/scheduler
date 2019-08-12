@@ -1,8 +1,9 @@
 # Interview Scheduler
+INterview Scheduler is a full stack application where users can book or update their interviwes with different interviewers. 
 
-## Setup
+## Product screenshots
 
-Install dependencies with `npm install`.
+![initialPage]
 
 ## Running Webpack Development Server
 
