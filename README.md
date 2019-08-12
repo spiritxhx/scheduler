@@ -3,22 +3,21 @@ INterview Scheduler is a full stack application where users can book or update t
 
 ## Product screenshots
 
-![initialPage]
+Users can see all the interviews of different people and can choose the day and time spot they prefer. 
+![initialPage](https://github.com/spiritxhx/scheduler/blob/master/screenshots/scheduler1.png)
 
-## Running Webpack Development Server
 
-```sh
-npm start
-```
+Users can save their interviews with their names and interviewers. 
+![addInterview](https://github.com/spiritxhx/scheduler/blob/master/screenshots/scheduler-save.png)
 
-## Running Jest Test Framework
 
-```sh
-npm test
-```
+Users can also delete their interviews with a warning message to make sure they don't misclick something. 
+![deleteInterview](https://github.com/spiritxhx/scheduler/blob/master/screenshots/scheduler-delete.png)
 
-## Running Storybook Visual Testbed
-
-```sh
-npm run storybook
-```
+## Dependencies
+- axios
+- classnames
+- normalize.css
+- react-hooks-testing-library
+- react-scripts
+- react-test-renderer
