@@ -62,11 +62,12 @@ export const useApplicationData = () => {
   const setDay = day => dispatch({ type: SET_DAY, day });
 
   useEffect(() => {
-    const getDays = axios.get("http://localhost:3001/api/days");
-    const getAppointments = axios.get("http://localhost:3001/api/appointments");
-    const getInterviewers = axios.get("http://localhost:3001/api/interviewers");
+    const getDays = axios.get("/api/days");
+    const getAppointments = axios.get("/api/appointments");
+    const getInterviewers = axios.get("/api/interviewers");
     Promise.all([getDays, getAppointments, getInterviewers])
       .then(res => {
+        console.log('res', res);
         dispatch({
           type: SET_APPLICATION_DATA,
           days: res[0].data,
