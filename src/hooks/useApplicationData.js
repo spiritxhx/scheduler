@@ -1,56 +1,17 @@
 import { useEffect, useReducer } from "react";
 // import WebSocket from 'ws';
 import axios from "axios";
-import { getDayFromAppointmentId, getSpotsForDay } from "../helpers/selectors";
-const SET_DAY = "SET_DAY";
-const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
-const SET_INTERVIEW = "SET_INTERVIEW";
-
+import { getDayFromAppointmentId } from "../helpers/selectors";
+import {
+  reducer,
+  SET_DAY,
+  SET_APPLICATION_DATA,
+  SET_INTERVIEW
+} from "reducers/application";
 //set up the websocket
 const ws = new WebSocket("ws://localhost:3001");
 
 // reducer body
-const reducer = (state, action) => {
-  const { day, days, appointments, interviewers, id, interview } = action;
-  switch (action.type) {
-    case SET_DAY:
-      return { ...state, day };
-
-    case SET_APPLICATION_DATA:
-      return {
-        ...state,
-        days,
-        appointments,
-        interviewers
-      };
-
-    case SET_INTERVIEW: {
-      const dayObj = state.days.find(eachDay => eachDay.name === day);
-      const dayIndex = dayObj.id - 1;
-      const appointment = {
-        ...state.appointments[id],
-        interview: interview
-      };
-      const appointments = {
-        ...state.appointments,
-        [id]: appointment
-      };
-      dayObj.spots = getSpotsForDay(state, appointments, day);
-      const days = state.days;
-      days[dayIndex] = dayObj;
-      return {
-        ...state,
-        appointments: { ...appointments },
-        days
-      };
-    }
-
-    default:
-      throw new Error(
-        `Tried to reduce with unsupported action type: ${action.type}`
-      );
-  }
-};
 
 export const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, {
