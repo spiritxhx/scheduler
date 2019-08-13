@@ -16,6 +16,8 @@ import Application from "components/Application";
 import axios from "axios";
 import { reducer } from "reducers/application";
 
+afterEach(cleanup);
+
 describe("Application Reducer", () => {
   it("thows an error with an unsupported type", () => {
     expect(() => reducer({}, { type: null })).toThrowError(
@@ -24,7 +26,6 @@ describe("Application Reducer", () => {
   });
 });
 
-afterEach(cleanup);
 
 describe("Appointment", () => {
   it("defaults to Monday and changes the schedule when a new day is selected (promise)", () => {
@@ -153,10 +154,10 @@ describe("Appointment", () => {
         appointment,
         "Something worong when you're tring to save this interview!"
       )
-    );
+    ).toBeInTheDocument();
   });
 
-  it("Something worong when you're tring to save this interview!", async () => {
+  it("Something worong when you're tring to delete this interview!", async () => {
     axios.delete.mockRejectedValueOnce();
     const { container, debug } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"));
@@ -180,6 +181,6 @@ describe("Appointment", () => {
         appointment,
         "Something worong when you're tring to delete this interview!"
       )
-    );
+    ).toBeInTheDocument();
   });
 });
