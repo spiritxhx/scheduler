@@ -74,8 +74,14 @@ export const getDayFromAppointmentId = id => {
 };
 
 // get the available spots left for the given day
-export const getSpotsForDay = (appointments, day) => {
+export const getSpotsForDay = (state, appointments, day) => {
   let spots = 5;
+  // for (const eachDay of state.days) {
+  //   if (eachDay.name === day) {
+  //     spots = eachDay.appointments.length;
+  //   }
+  // }
+
   for (const id in appointments) {
     if (getDayFromAppointmentId(id) === day && appointments[id].interview) {
       spots--;

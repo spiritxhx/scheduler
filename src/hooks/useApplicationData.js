@@ -35,7 +35,7 @@ const reducer = (state, action) => {
         ...state.appointments,
         [id]: appointment
       };
-      dayObj.spots = getSpotsForDay(appointments, day);
+      dayObj.spots = getSpotsForDay(state, appointments, day);
       const days = state.days;
       days[dayIndex] = dayObj;
       return {

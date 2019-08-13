@@ -1,11 +1,4 @@
-/*
-  We are rendering `<Application />` down below, so we need React.createElement
-*/
 import React from "react";
-/*
-  We import our helper functions from the react-testing-library
-  The render function allows us to render Components
-*/
 import {
   render,
   cleanup,
@@ -13,16 +6,16 @@ import {
   waitForElement,
   getAllByTestId,
   getByText,
+  queryByAltText,
   prettyDOM,
   getByAltText,
-  getByPlaceholderText, 
+  getByPlaceholderText,
   queryByText
 } from "@testing-library/react";
-/*
-  We import the component that we are testing
-*/
 import Application from "components/Application";
+
 afterEach(cleanup);
+
 describe("Appointment", () => {
   it("defaults to Monday and changes the schedule when a new day is selected (promise)", () => {
     const { getByText } = render(<Application />);
@@ -39,7 +32,6 @@ describe("Appointment", () => {
     expect(getByText("Leopold Silvers")).toBeInTheDocument();
   });
 
-
   it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
     const { container } = render(<Application />);
 
@@ -47,7 +39,6 @@ describe("Appointment", () => {
     const appointments = getAllByTestId(container, "appointment");
     const appointment = getAllByTestId(container, "appointment")[0];
     // console.log(prettyDOM(appointment));
-
     fireEvent.click(getByAltText(appointment, "Add"));
 
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
@@ -64,5 +55,52 @@ describe("Appointment", () => {
     );
 
     expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
+  });
+
+  it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+    // 1. Render the Application.
+    const { container, debug } = render(<Application />);
+
+    // 2. Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+    // const appointment = getAllByTestId(container, "show")[0];
+
+    // 3. Click the "Delete" button on the booked appointment.
+    const appointment = getAllByTestId(container, "appointment").find(
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
+    fireEvent.click(queryByAltText(appointment, "Delete"));
+
+    // 4. Check that the confirmation message is shown.
+    expect(
+      getByText(appointment, "Are you sure you want to delete this interview?")
+    ).toBeInTheDocument();
+
+    // 5. Click the "Confirm" button on the confirmation.
+    fireEvent.click(queryByText(appointment, "Confirm"));
+    // 6. Check that the element with the text "Deleting" is displayed.
+    expect(getByText(appointment, "DELETING")).toBeInTheDocument();
+    // 7. Wait until the element with the "Add" button is displayed.
+    await waitForElement(() => getByAltText(appointment, "Add"));
+    // 8. Check that the DayListItem with the text "Monday" also has the text "2 spots remaining".
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
+    expect(getByText(day, "4 spots remaining")).toBeInTheDocument();
+  });
+
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+    // 1. Render the Application.
+    const { container } = render(<Application />);
+
+    // 2. Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    // With the existing interview we want to find the edit button.
+    // We change the name and save the interview.
+    // We don't want the spots to change for "Monday", since this is an edit.
+    // Read the errors because sometimes they say that await cannot be outside of an async function.
+
+
   });
 });
