@@ -80,7 +80,7 @@ export const useApplicationData = () => {
   //deal with the websocket to dynamically render multiple pages
   ws.onmessage = function(event) {
     const { type, id, interview } = JSON.parse(event.data);
-    const day = getDayFromAppointmentId(id);
+    const day = getDayFromAppointmentId(state, id);
     dispatch({ type, id, interview, day: day });
   };
 

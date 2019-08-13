@@ -50,40 +50,28 @@ export const getInterviewersForDay = (state, day) => {
   return ans;
 };
 
-export const getDayFromAppointmentId = id => {
-  switch (Math.ceil(id / 5)) {
-    case 1: {
-      return "Monday";
-    }
-    case 2: {
-      return "Tuesday";
-    }
-    case 3: {
-      return "Wednesday";
-    }
-    case 4: {
-      return "Thursday";
-    }
-    case 5: {
-      return "Friday";
-    }
-    default: {
-      return "Wrong!!!";
+export const getDayFromAppointmentId = (state, id) => {
+  for (const day of state.days) {
+    if (day.appointments.includes(Number(id))) {
+      return day.name;
     }
   }
 };
 
 // get the available spots left for the given day
 export const getSpotsForDay = (state, appointments, day) => {
-  let spots = 5;
-  // for (const eachDay of state.days) {
-  //   if (eachDay.name === day) {
-  //     spots = eachDay.appointments.length;
-  //   }
-  // }
+  let spots = 0;
+  for (const eachDay of state.days) {
+    if (eachDay.name === day) {
+      spots = eachDay.appointments.length;
+    }
+  }
 
   for (const id in appointments) {
-    if (getDayFromAppointmentId(id) === day && appointments[id].interview) {
+    if (
+      getDayFromAppointmentId(state, id) === day &&
+      appointments[id].interview
+    ) {
       spots--;
     }
   }
