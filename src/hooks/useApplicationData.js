@@ -67,7 +67,6 @@ export const useApplicationData = () => {
     const getInterviewers = axios.get("/api/interviewers");
     Promise.all([getDays, getAppointments, getInterviewers])
       .then(res => {
-        console.log('res', res);
         dispatch({
           type: SET_APPLICATION_DATA,
           days: res[0].data,
