@@ -39,4 +39,4 @@ deploy:
     - run:
         name: Push Master to Production
         command: |
-          git push https://github.com/spiritxhx/scheduler.git master:production
+          git push git@github.com:spiritxhx/scheduler.git master:production
