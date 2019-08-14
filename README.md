@@ -1,5 +1,6 @@
 # Interview Scheduler
-INterview Scheduler is a full stack application where users can book or update their interviwes with different interviewers. 
+Interview Scheduler is a full stack application where users can book or update their interviwes with different interviewers. 
+The project has been tested through Jest and Cypress.
 
 ## Product screenshots
 
