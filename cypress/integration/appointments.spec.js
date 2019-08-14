@@ -22,7 +22,9 @@ describe("Appointments", () => {
   });
 
   it("should edit an interview", () => {
-    cy.get("[class=text--regular]").contains("Archie Cohen").click();
+    cy.get("[class=text--regular]")
+      .contains("Archie Cohen")
+      .click();
 
     cy.get("[alt='Edit']").click({ force: true });
 
@@ -32,5 +34,20 @@ describe("Appointments", () => {
     cy.contains("Save").click();
     cy.contains(".appointment__card--show", "hans");
     cy.contains(".appointment__card--show", "Sylvia Palmer");
+  });
+
+  it("should cancel an interview", () => {
+    cy.get("[class=text--regular]")
+      .contains("Archie Cohen")
+      .click();
+
+    cy.get("[alt='Delete']").click({ force: true });
+    cy.contains("Confirm").click();
+
+    cy.contains("DELETING").should("exist");
+
+    cy.contains("DELETING").should("not.exist");
+
+    cy.contains(".appointment__card--show", "Archie Cohen").should("not.exist");
   });
 });
