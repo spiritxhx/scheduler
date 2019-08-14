@@ -24,3 +24,19 @@ workflows:
   test:
     jobs:
       - build
+
+deploy:
+  machine:
+    enabled: true
+
+  working_directory: ~/client
+
+  steps:
+    - add_ssh_keys:
+        fingerprints:
+          - "9e:61:d3:4d:b6:54:3f:f6:2b:02:f8:0f:91:5d:a3:a4"
+    - checkout
+    - run:
+        name: Push Master to Production
+        command: |
+          git push https://github.com/spiritxhx/scheduler.git master:production
