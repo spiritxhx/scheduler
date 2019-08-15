@@ -48,7 +48,7 @@ export const useApplicationData = () => {
   const bookInterview = (id, interview, day) => {
     //put the update into the server side and database
     return axios
-      .put(`http://localhost:3001/api/appointments/${id}`, { interview })
+      .put(`/api/appointments/${id}`, { interview })
       .then(() => {
         dispatch({ type: SET_INTERVIEW, id, interview, day });
       });
@@ -57,7 +57,7 @@ export const useApplicationData = () => {
   const cancelInterview = (id, day) => {
     // delete the interview
     return axios
-      .delete(`http://localhost:3001/api/appointments/${id}`)
+      .delete(`/api/appointments/${id}`)
       .then(() => {
         dispatch({ type: SET_INTERVIEW, id, interview: null, day });
       });
