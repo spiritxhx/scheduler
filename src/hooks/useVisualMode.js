@@ -15,7 +15,7 @@ export const useVisualMode = value => {
     }
     setMode(value2);
   };
-  // gert 1 step back in the history
+  // get 1 step back in the history
   const back = () => {
     history.pop();
     if (history.length > 0) {

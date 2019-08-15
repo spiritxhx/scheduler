@@ -14,6 +14,9 @@ export default function DayListItem(props) {
       <li className={liClass} data-testid="day" onClick={() => props.setDay(props.name)}>
         <h2>{props.name}</h2>
         <h3>
+          {/* 
+            conditional rendering the sentence based on the spots
+           */}
           {props.spots === 0
             ? "no spots remaining"
             : props.spots === 1

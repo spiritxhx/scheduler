@@ -6,6 +6,7 @@ import "index.scss";
 import Application from "components/Application";
 import axios from "axios";
 
+//add base url for axios when deploy it to the netlify
 if (process.env.REACT_APP_API_BASE_URL) {
   axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 }

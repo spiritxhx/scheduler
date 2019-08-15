@@ -65,6 +65,7 @@ export default function Appointment(props) {
           onCancel={back}
           onSave={(name, interviewer) => {
             if (name && interviewer) {
+              //test if the input is valid
               transition(SAVING, true);
               props
                 .bookInterview(props.id, save(name, interviewer), props.day)
@@ -84,6 +85,7 @@ export default function Appointment(props) {
           interviewers={props.interviewers}
           onCancel={back}
           onSave={(name, interviewer) => {
+            //test if the input is valid
             if (name && interviewer) {
               transition(SAVING, true);
               props
@@ -121,7 +123,7 @@ export default function Appointment(props) {
         <Error
           message="Something worong when you're tring to save this interview!"
           onClose={() => {
-            back();
+            back(); //get back modes if click the close tag
             back();
           }}
         />

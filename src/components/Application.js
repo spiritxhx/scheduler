@@ -23,6 +23,7 @@ export default function Application(props) {
   //show the correct value for appoinments
   const interviewers = getInterviewersForDay(state, state.day);
   const days = getAppointmentsForDay(state, state.day);
+  // map through the days array to render the appointments
   const appointmentList = days.map(appointment => {
     const interview = getInterview(state, appointment.interview);
     return (

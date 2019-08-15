@@ -6,6 +6,7 @@ export const SET_INTERVIEW = "SET_INTERVIEW";
 
 export const reducer = (state, action) => {
   const { day, days, appointments, interviewers, id, interview } = action;
+  //check the action type being passed in for different despatch
   switch (action.type) {
     case SET_DAY:
       return { ...state, day };

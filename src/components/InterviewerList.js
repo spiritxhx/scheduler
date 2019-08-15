@@ -8,6 +8,9 @@ export default function interviewerList(props) {
     <section className="interviewers">
       <h4 className="interviewers__header text--light">Interviewer</h4>
       <ul className="interviewers__list">
+        {/* 
+          map through the props.interviewers array to render list item
+         */}
         {props.interviewers.map(interviewer => {
           return (
             <InterviewerListItem
