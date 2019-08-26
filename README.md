@@ -15,6 +15,9 @@ The project has been tested through Jest and Cypress.
 3. Users can also delete their interviews with a warning message to make sure they don't misclick something. 
 ![deleteInterview](https://github.com/spiritxhx/scheduler/blob/master/screenshots/scheduler-delete.png)
 
+4. The tset coverage for the application. 
+![testCoverage](https://github.com/spiritxhx/scheduler/blob/master/screenshots/Jest-coverage.png)
+
 ## Dependencies
 - axios
 - classnames
