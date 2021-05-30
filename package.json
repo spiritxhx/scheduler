@@ -10,7 +10,7 @@
     "react-hooks-testing-library": "^0.6.0",
     "react-scripts": "3.0.0",
     "react-test-renderer": "^16.8.6",
-    "ws": "^7.1.1"
+    "ws": "^7.4.6"
   },
   "scripts": {
     "start": "react-scripts start",
