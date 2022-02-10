@@ -45,7 +45,7 @@
     "@testing-library/react-hooks": "^1.1.0",
     "babel-loader": "^8.0.5",
     "cypress": "^3.4.1",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
